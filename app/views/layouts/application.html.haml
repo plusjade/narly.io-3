@@ -1,0 +1,25 @@
+!!!
+%html
+%head
+  %title Narly
+  = stylesheet_link_tag "application", :media => "all"
+  <link href='//fonts.googleapis.com/css?family=Nunito:300' rel='stylesheet' type='text/css'>
+  :css
+    body {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 300;
+    }
+  = csrf_meta_tags
+
+%body
+  = yield
+
+  <script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+  = javascript_include_tag "application"
+  :javascript
+    $(function() {
+      #{ yield :page_javascripts };
+    });
