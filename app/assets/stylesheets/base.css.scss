@@ -1,0 +1,157 @@
+$modified-color: #F9CF4F;
+$added-color: #64B73A;
+$deleted-color: #F5A2A2;
+/*
+http://www.colourlovers.com/palette/3304711/Moja_prva
+http://www.colourlovers.com/palette/74212/Scrimshaw
+*/
+
+body {
+  padding:0;
+  margin:0;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+#footer {
+  clear:both;
+  padding:20px 10px;
+  color:#1C9EDB;
+  font-size: 10px;
+}
+#table-of-contents {
+  position: fixed;
+  right:0;
+  top:0;
+  bottom:0;
+  width:350px;
+  padding:0;
+  margin: 0;
+  background-color:#FBF8F5;
+  border-left:1px solid #64B73A;
+  font-size: 14px;
+  li {
+    list-style-position: inside;
+    color:#64B73A;
+    &:hover, &.active {
+      color:#FFF;
+      a {
+        background-color:#64B73A;
+        color:#FFF;
+      }
+    }
+    a {
+      display: block;
+      padding:7px 20px;
+      text-decoration: none;
+      color:inherit;
+      font-size:inherit;
+    }
+    &:last-child {
+      border-bottom:0;
+    }
+  }
+}
+
+#main-commit-container {
+  margin-bottom: 40px;
+  overflow: hidden;
+  .title {
+    margin:0;
+    padding:15px;
+    color: #1C9EDB;
+    border-bottom: 1px solid #1C9EDB;
+    font-weight: normal;
+  }
+  .body {
+    padding:15px;
+    height:150px;
+    overflow: auto;
+    width:50%;
+    line-height: 1.5em;
+    color: #1C9EDB;
+  }
+
+  .file-list-wrap {
+    width:50%;
+    float:right;
+    .file-list {
+      margin:0;
+      padding:0 0 0 15px;
+      li {
+        list-style: none;
+        margin-bottom: 3px;
+        padding:3px;
+        span {
+          padding:3px;
+        }
+        &.modified span {
+          background-color: $modified-color;
+        }
+        &.deleted span {
+          background-color: $deleted-color;
+        }
+        &.added span {
+          background-color: $added-color;
+        }
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+  .hunks-wrap {
+    width:50%;
+    float:right;
+
+    .hunk {
+      padding:10px;
+      margin:0 0 10px 10px;
+      border-left:5px solid;
+      border-top:1px solid;
+      overflow: auto;
+
+      &.modified {
+        border-color:#F9CF4F;
+      }
+      &.deleted {
+        border-color:#F5A2A2;
+      }
+      &.added {
+        border-color:#64B73A;
+      }
+    }
+
+    .diff-file {
+      &.modified .diff-header {
+        border-bottom:2px solid $modified-color;
+      }
+      &.deleted .diff-header {
+        border-bottom:2px solid $deleted-color;
+      }
+      &.added .diff-header{
+        border-bottom:2px solid $added-color;
+      }
+    }
+  }
+}
+
+table {
+  padding:0;
+  margin:0;
+  width:100%;
+  border-collapse: collapse;
+  tr {
+    padding:0;
+    margin:0;
+  }
+  td {
+    &.addition {
+      background-color: #CFD;
+    }
+    &.deletion {
+      background-color: #FDD;
+    }
+  }  
+}

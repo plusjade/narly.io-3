@@ -1,0 +1,24 @@
+%table.text-file
+  - lines.each_with_index do |line, i|
+    - line_code = "todo-#{ i }"
+    - old_line = line.old_lineno == -1 ? '' : line.old_lineno
+    - new_line = line.new_lineno == -1 ? '' : line.new_lineno
+    - content = ''
+    - content += '+ ' if line.addition?
+    - content += '- ' if line.deletion?
+    - content += line.content.to_s.chomp.html_safe
+    %tr.line_holder{ id: line_code, class: line.line_origin }
+      - if line.file_header?
+        %td.old_line= "..."
+        %td.new_line= "..."
+        %td.line_content.matched= content
+      - elsif line.context?
+        %td.old_line= new_line
+        %td.new_line= new_line
+        %td.line_content= content
+      - else
+        %td.old_line
+          = old_line unless line.addition?
+        %td.new_line
+          = new_line unless line.deletion?
+        %td.line_content{class: "noteable_line #{ line.line_origin } #{line_code}", "line_code" => line_code }= content

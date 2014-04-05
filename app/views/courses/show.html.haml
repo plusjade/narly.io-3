@@ -1,0 +1,10 @@
+#main-commit-container
+
+= render partial: "templates/main-commit"
+
+- content_for :page_javascripts do
+  :plain
+    Narly.env.commits = new Narly.Commits(#{ @repo.commits.to_json.html_safe });
+    var $tableOfContents = new Narly.CommitsView({ collection: Narly.env.commits })
+    $("body").append($tableOfContents.render());
+    Narly.env.commits.at(0).fetch();
