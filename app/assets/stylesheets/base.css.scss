@@ -1,6 +1,9 @@
 $modified-color: #F9CF4F;
 $added-color: #64B73A;
 $deleted-color: #F5A2A2;
+$bold-blue: #1C9EDB;
+$bold-green: #64B73A;
+
 /*
 http://www.colourlovers.com/palette/3304711/Moja_prva
 http://www.colourlovers.com/palette/74212/Scrimshaw
@@ -12,6 +15,39 @@ body {
 }
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
+}
+#top-bar {
+  position:fixed;
+  height:40px;
+  width:100%;
+  z-index: 10;
+  background-color:#FFF;
+  border-bottom:2px solid $bold-blue;
+}
+#prev-next {
+  z-index:10;
+  position:absolute;
+  top:0;
+  right:0;
+  background-color: $bold-blue;
+  a {
+    height: 40px;
+    display: inline-block;
+    padding: 0 20px;
+    line-height: 40px;
+    color: #FFF;
+    text-decoration: none;
+    &:hover {
+      background-color:#444;
+    }
+    &.prev {
+
+    }
+    &.next {
+
+    }
+
+  }
 }
 
 #footer {

@@ -16,6 +16,31 @@ window.Narly = (function() {
 
     var Commits = Backbone.Collection.extend({
         model: Commit
+        ,
+        getPrevFromActive : function() {
+            return this.getFromActive(-1);
+        }
+        ,
+        getNextFromActive : function() {
+            return this.getFromActive(1);
+        }
+        ,
+        getFromActive : function(direction) {
+            var active = this.get(this.activeId),
+                index = this.indexOf(active),
+                max = this.length-1;
+
+            index += direction; 
+
+            if(index < 0) {
+                index = max;
+            }
+            else if (index > max) {
+                index = 0;
+            }
+
+            return this.at(index);
+        }
     })
 
     var CommitsView = Backbone.View.extend({
@@ -33,21 +58,8 @@ window.Narly = (function() {
             // Left/Right arrow navigation.
             $(document).keydown(function(e) {
                 if ([37, 39].indexOf(e.keyCode) > -1) {
-                    var active = self.collection.get(self.collection.activeId),
-                        index = self.collection.indexOf(active),
-                        max = self.collection.length-1;
-
-                    index = (e.keyCode == 37) ? index - 1 : index + 1 ;
-
-                    if(index < 0) {
-                        index = max;
-                    }
-                    else if (index > max) {
-                        index = 0;
-                    }
-
-                    self.collection.at(index).fetch();
-
+                    var direction = (e.keyCode == 37) ? -1 : 1;
+                    self.collection.getFromActive(direction).fetch();
                     return false;
                 }
             })
@@ -115,6 +127,24 @@ window.Narly = (function() {
         }
     })
 
+    var TopBar = Backbone.View.extend({
+        collection : Commits
+        ,
+        events : {
+            'click a.prev' : 'prev',
+            'click a.next' : 'next'
+        }
+        ,
+        prev : function(e) {
+            e.preventDefault();
+            this.collection.getPrevFromActive().fetch();
+        }
+        ,
+        next : function(e) {
+            e.preventDefault();
+            this.collection.getNextFromActive().fetch();
+        }
+    })
     return {
         env : {}
         ,
@@ -127,5 +157,7 @@ window.Narly = (function() {
         CommitView : CommitView
         ,
         CommitFullView : CommitFullView
+        ,
+        TopBar : TopBar
     }
 })();
