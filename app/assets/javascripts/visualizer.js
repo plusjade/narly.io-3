@@ -16,9 +16,12 @@ window.Visualizer = (function() {
         svg = svgWrap.append("g")
                 .attr("transform", "translate(" + margin + "," + margin + ")");
 
-    function update(deltas) {
+    function update(data) {
         console.log('d3 beaning!');
-        var data = generateGlobalFileSetFromDeltas(deltas);
+        data.forEach(function(d, i) {
+            d.indentLevel = d.path.split('/').length - 1;
+            d.position = i;
+        });
         console.log(data);
 
         // Dynamically build the viewport and scaling based on dataset.
@@ -87,38 +90,6 @@ window.Visualizer = (function() {
             d.x0 = d.x;
             d.y0 = d.y;
         });
-    }
-
-    var GlobalFiles = {};
-    function generateGlobalFileSetFromDeltas(deltas) {
-        deltas.forEach(function(d) {
-            d.indentLevel = d.path.split('/').length - 1;
-            if(d.status === "deleted" && GlobalFiles[d.path]) {
-                delete GlobalFiles[d.path];
-            }
-            else {
-                GlobalFiles[d.path] = d;
-            }
-        });
-
-        var data = [];
-        for(key in GlobalFiles) {
-            data.push(GlobalFiles[key]);
-        }
-        data.sort(function(a, b) {
-            if (a.path > b.path) {
-                return 1;
-            }
-            if (a.path < b.path) {
-                return -1;
-            }
-            return 0;
-        })
-        data.forEach(function(d, i) {
-            d.position = i;
-        })
-
-        return data;
     }
 
     return {
