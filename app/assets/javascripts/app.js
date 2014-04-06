@@ -132,8 +132,14 @@ window.Narly = (function() {
         collection : Commits
         ,
         events : {
+            'click a.toc-toggle' : 'tocToggle',
             'click a.prev' : 'prev',
             'click a.next' : 'next'
+        }
+        ,
+        tocToggle : function(e) {
+          e.preventDefault();
+          $('body').toggleClass('toc-expand');
         }
         ,
         prev : function(e) {

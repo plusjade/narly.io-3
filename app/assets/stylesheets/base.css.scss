@@ -23,6 +23,22 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 10;
   background-color:#FFF;
   border-bottom:2px solid $bold-blue;
+  .toc-toggle {
+    z-index:10;
+    position:absolute;
+    top:0;
+    left:0;
+    display:block;
+    padding:0 20px;
+    line-height: 40px;
+    text-align: center;
+    background-color: $bold-blue;
+    color:#FFF;
+    text-decoration: none;
+    &:hover {
+      background-color:#444;
+    }
+  }
 }
 #prev-next {
   z-index:10;
@@ -56,30 +72,33 @@ h1, h2, h3, h4, h5, h6 {
   color:#1C9EDB;
   font-size: 10px;
 }
+
 #table-of-contents {
+  display: none;
   position: fixed;
-  right:0;
-  top:0;
+  left:0;
+  top:41px;
   bottom:0;
-  width:350px;
+  width:300px;
   padding:0;
   margin: 0;
-  background-color:#FBF8F5;
-  border-left:1px solid #64B73A;
+  overflow: auto;
+  border-right:2px solid $bold-blue;
   font-size: 14px;
   li {
     list-style-position: inside;
-    color:#64B73A;
+    color: #555;
+    border-bottom:1px solid #FBF8F5;
     &:hover, &.active {
       color:#FFF;
       a {
-        background-color:#64B73A;
+        background-color: $bold-blue;
         color:#FFF;
       }
     }
     a {
       display: block;
-      padding:7px 20px;
+      padding:7px 15px;
       text-decoration: none;
       color:inherit;
       font-size:inherit;
@@ -89,24 +108,46 @@ h1, h2, h3, h4, h5, h6 {
     }
   }
 }
+body.toc-expand {
+  #table-of-contents {
+    display:block;
+  }
+  #main-commit-container {
+    left:300px;
+  }
+  #world {
+    left: 81%;
+  }
+}
 
 #main-commit-container {
+  position:absolute;
+  top:41px;
+  left:0;
+  right:0;
   margin-bottom: 40px;
   overflow: hidden;
   .title {
     margin:0;
-    padding:15px;
+    position:fixed;
+    left:70px;
+    top:0px;
+    z-index:11;
+    background-color:#FFF;
+    height:40px;
+    line-height:40px;
     color: #1C9EDB;
-    border-bottom: 1px solid #1C9EDB;
-    font-weight: normal;
+    font-size: 20px;
   }
-  .body {
-    padding:15px;
-    height:150px;
-    overflow: auto;
-    width:50%;
-    line-height: 1.5em;
-    color: #1C9EDB;
+  .body-wrap {
+    float:left;
+    width:25%;
+    .body {
+      padding:15px;
+      background-color: #FFF;
+      line-height: 1.5em;
+      color: #444;
+    }
   }
 
   .file-list-wrap {
@@ -122,14 +163,17 @@ h1, h2, h3, h4, h5, h6 {
         span {
           padding:3px;
         }
-        &.modified span {
-          background-color: $modified-color;
+        &.modified {
+          border-left:3px solid;
+          border-color: $modified-color;
         }
-        &.deleted span {
-          background-color: $deleted-color;
+        &.deleted {
+          border-left:3px solid;
+          border-color: $deleted-color;
         }
-        &.added span {
-          background-color: $added-color;
+        &.added {
+          border-left:3px solid;
+          border-color: $added-color;
         }
         &:last-child {
           border-bottom: 0;
@@ -139,11 +183,10 @@ h1, h2, h3, h4, h5, h6 {
   }
   .hunks-wrap {
     width:50%;
-    float:right;
-
+    float:left;
+    margin-top: 20px;
     .hunk {
-      padding:10px;
-      margin:0 0 10px 10px;
+      margin-bottom:10px;
       border-left:5px solid;
       border-top:1px solid;
       overflow: auto;

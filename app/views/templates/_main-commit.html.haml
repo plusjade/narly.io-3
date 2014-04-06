@@ -1,6 +1,7 @@
 %script{ id: "commit-container-template", type: "x-template" }
-  %h2.title {{ title }}
-  .body {{ body }}
+  %h1.title {{ title }}
+  .body-wrap
+    .body {{ body }}
   .hunks-wrap
     {{# hunks }}
     %div{ class: "diff-file {{ status }}" }
