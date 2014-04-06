@@ -6,7 +6,6 @@ $deleted : red; // not used
 $added : green; // not used
 
 .diff-file {
-  margin-left:10px;
   margin-bottom: 1em;
 
   .diff-header {
@@ -136,7 +135,7 @@ $added : green; // not used
         border-color: #B9ECB9;
       }
       &:hover td {
-        background-color: yellow;
+        background-color: #FFFFAA;
       }
     }
     .line_content {
