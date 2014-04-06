@@ -122,6 +122,7 @@ window.Narly = (function() {
         }
         , 
         render : function() {
+            window.Visualizer.update(this.model.get('snapshot'));
             var content = Mustache.render(this.template, this.model.attributes);
             return this.$el.html(content);
         }

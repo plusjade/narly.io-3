@@ -2,7 +2,16 @@ $modified-color: #F9CF4F;
 $added-color: #64B73A;
 $deleted-color: #F5A2A2;
 
+#world {
+  position: absolute;
+  left: 76%;
+  top: 40px;
+}
+
 .g-node {
+  text {
+    fill:#444;
+  }
   &.context {
     circle {
       fill: #DDD;

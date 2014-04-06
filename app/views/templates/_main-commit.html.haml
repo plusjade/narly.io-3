@@ -1,12 +1,6 @@
 %script{ id: "commit-container-template", type: "x-template" }
   %h2.title {{ title }}
   .body {{ body }}
-  .file-list-wrap
-    %ul.file-list
-      {{# deltas }}
-      %li{ class: "{{ status }}" }
-        %span {{ path }}
-      {{/ deltas }}
   .hunks-wrap
     {{# hunks }}
     %div{ class: "diff-file {{ status }}" }

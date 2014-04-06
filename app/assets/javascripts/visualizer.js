@@ -10,7 +10,7 @@ window.Visualizer = (function() {
     //         .style('background-color', "#ccc")
 
     var margin = 20,
-        width = 500,
+        width = 300,
         nodeHeight = 20,
         svgWrap = d3.select("#world").append("svg"),
         svg = svgWrap.append("g")
