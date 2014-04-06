@@ -26,17 +26,12 @@ window.Visualizer = (function() {
 
         // Dynamically build the viewport and scaling based on dataset.
         var height = data.length * nodeHeight * 2;
-        var x = d3.scale.linear().rangeRound([0, width]);
         var y = d3.scale.linear();
-        var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient("bottom");
         var yAxis = d3.svg.axis()
             .scale(y)
             .orient("left")
             .ticks(data.length, "d");
 
-        x.domain([0, d3.max(data, function(d) { return d.indentLevel; })]);
         y.domain([0, data.length]);
         y.rangeRound([0, data.length*nodeHeight*2]);
 
