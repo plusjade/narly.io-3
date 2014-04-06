@@ -71,7 +71,7 @@ window.Visualizer = (function() {
             .duration(World.duration)
             .attr("class", function(d) { return "g-node " + d.status; })
             .attr("transform", function(d) {
-                return "translate(" + (30*d.indentLevel) + "," + (d.position*nodeHeight*1.5) + ")";
+                return "translate(" + 0 + "," + (d.position*nodeHeight*1.5) + ")";
             });
 
         var nodeExit = node.exit();
