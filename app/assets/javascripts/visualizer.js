@@ -51,15 +51,14 @@ window.Visualizer = (function() {
             .attr("class", function(d) { return "g-node " + d.status; })
 
         nodeEnter
-            .append("rect")
-                .attr("class", 'bar')
-                .attr("height", nodeHeight)
-                .attr("width", 300)
+            .append("svg:circle")
+                .attr("r", 8)
+                .attr("cy", 20)
 
         nodeEnter
             .append("text")
-                .attr("dy", 15)
-                .attr("dx", 10)
+                .attr("dy", 25)
+                .attr("dx", 14)
                 .style("text-anchor", "start")
                 .text(function(d) { return d.path });
 
