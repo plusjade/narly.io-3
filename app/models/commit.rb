@@ -72,6 +72,30 @@ class Commit < SimpleDelegator
     @hunks
   end
 
+  def hunks_first_commit
+    data = []
+    tree.each_blob do |a|
+      blob = @repo.lookup(a[:oid])
+
+      html = blob.content
+
+      if %w(.md .markdown).include?(File.extname(a[:name]))
+        html = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new,
+                  autolink: true,
+                  fenced_code_blocks: true,
+               ).render(html)
+      end
+
+      data << {
+        status: "readme",
+        path: a[:name],
+        html: html,
+      }
+    end
+
+    data
+  end
+
   # The directory snapshot at the time of this commit.
   def snapshot
     ls_tree(tree).map do |path|
@@ -88,9 +112,8 @@ class Commit < SimpleDelegator
     {
       title: title,
       body: body,
-      deltas: deltas_to_api,
-      hunks: hunks_to_api,
-      snapshot: snapshot
+      hunks: first_commit? ? hunks_first_commit : hunks_to_api,
+      snapshot: snapshot,
     }
   end
 

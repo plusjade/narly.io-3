@@ -160,6 +160,13 @@ $added : green; // not used
       }
     }
   }
+  // not actually a diff
+  &.readme {
+    .diff-content {
+      padding:10px;
+    }
+  }
+
   .image {
     background: #ddd;
     text-align: center;
