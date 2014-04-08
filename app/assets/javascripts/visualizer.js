@@ -25,7 +25,7 @@ window.Visualizer = (function() {
         console.log(data);
 
         // Dynamically build the viewport and scaling based on dataset.
-        var height = data.length * nodeHeight * 2;
+        var height = 20 + (data.length * nodeHeight * 2);
         var y = d3.scale.linear();
         var yAxis = d3.svg.axis()
             .scale(y)
