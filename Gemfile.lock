@@ -91,6 +91,7 @@ GEM
     rake (10.2.2)
     rdoc (3.12.2)
       json (~> 1.4)
+    redcarpet (3.1.1)
     ref (1.0.5)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
@@ -131,6 +132,7 @@ DEPENDENCIES
   haml
   jquery-rails
   rails (= 3.2.17)
+  redcarpet
   rspec
   rugged!
   sass-rails (~> 3)

@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.17'
 gem 'rugged', git: 'git://github.com/libgit2/rugged.git', branch: 'development', submodules: true
 gem 'haml'
+gem 'redcarpet'
 
 group :assets do
   gem 'sass-rails',   '~> 3'
