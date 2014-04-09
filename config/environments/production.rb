@@ -1,4 +1,5 @@
 Narly::Application.configure do
+  config.git_repo_path = '~/git-tutorials/'
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests

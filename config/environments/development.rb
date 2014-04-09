@@ -1,4 +1,5 @@
 Narly::Application.configure do
+  config.git_repo_path = '/Users/jade/dropbox/active/git-tutorials/'
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
