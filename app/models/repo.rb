@@ -1,11 +1,11 @@
 require 'delegate'
 
 class Repo < SimpleDelegator
-  attr_reader :first_commit
+  attr_reader :first_commit, :name
 
   def initialize(name)
     raise "Repo name not defined" unless name
-
+    @name = name
     path = Sandbox.get_repo_path(name)
     super(Rugged::Repository.new(path))
   end

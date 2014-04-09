@@ -2,10 +2,6 @@ window.Narly = (function() {
     var Commit = Backbone.Model.extend({
         idAttribute: 'sha'
         ,
-        url : function() {
-            return '/courses/cucumber/commits/' + this.id + '.json';
-        }
-        ,
         // TODO: this is only needed to force sync event.
         // Is there a better way? Also we should probably delegate to a cache anyway.
         parse : function(rsp) {
@@ -16,6 +12,10 @@ window.Narly = (function() {
 
     var Commits = Backbone.Collection.extend({
         model: Commit
+        ,
+        url : function() {
+            return '/courses/' + this.courseName + '/commits/'
+        }
         ,
         getPrevFromActive : function() {
             return this.getFromActive(-1);
