@@ -1,0 +1,15 @@
+:css
+  .courses-list li {
+    margin-bottom:5px;
+  }
+  .padding {
+    padding:10px;
+  }
+
+%div.padding
+  %h1 Git-based tutorials
+
+  %ul.courses-list
+    - @courses.each do |name|
+      %li
+        %a{ href: "/courses/#{ name }" }= name
