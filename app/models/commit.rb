@@ -20,7 +20,14 @@ class Commit < SimpleDelegator
     data = message.split(/\n/)
     data.shift
 
-    @body = data.join("\n")
+    data = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new,
+              safe_links_only: true,
+              filter_html: true,
+              autolink: true,
+              fenced_code_blocks: true,
+           ).render(data.join("\n"))
+
+    @body = data
   end
 
   def diffs
@@ -81,6 +88,8 @@ class Commit < SimpleDelegator
 
       if %w(.md .markdown).include?(File.extname(a[:name]))
         html = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new,
+                  safe_links_only: true,
+                  filter_html: true,
                   autolink: true,
                   fenced_code_blocks: true,
                ).render(html)
