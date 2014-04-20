@@ -20,14 +20,7 @@ class Commit < SimpleDelegator
     data = message.split(/\n/)
     data.shift
 
-    data = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new,
-              safe_links_only: true,
-              filter_html: true,
-              autolink: true,
-              fenced_code_blocks: true,
-           ).render(data.join("\n"))
-
-    @body = data
+    @body = OutputRenderer.markdown(data.join("\n"))
   end
 
   def diffs
@@ -72,7 +65,7 @@ class Commit < SimpleDelegator
         lines += hunk.lines
       end
 
-      html = DiffRenderer.render(lines)
+      html = OutputRenderer.diff(lines)
 
       {
         status: status,
