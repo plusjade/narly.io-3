@@ -150,40 +150,9 @@ body.toc-expand {
     }
   }
 
-  .file-list-wrap {
+  .diffs-wrap {
     width:50%;
     float:right;
-    .file-list {
-      margin:0;
-      padding:0 0 0 15px;
-      li {
-        list-style: none;
-        margin-bottom: 3px;
-        padding:3px;
-        span {
-          padding:3px;
-        }
-        &.modified {
-          border-left:3px solid;
-          border-color: $modified-color;
-        }
-        &.deleted {
-          border-left:3px solid;
-          border-color: $deleted-color;
-        }
-        &.added {
-          border-left:3px solid;
-          border-color: $added-color;
-        }
-        &:last-child {
-          border-bottom: 0;
-        }
-      }
-    }
-  }
-  .hunks-wrap {
-    width:50%;
-    float:left;
     margin-top: 20px;
     .hunk {
       margin-bottom:10px;

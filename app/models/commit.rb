@@ -55,9 +55,9 @@ class Commit < SimpleDelegator
   # line by ine which is nice, via .lines
   # h.owner is a Patch
   # h.owner.owner is a Diff
-  def hunks_to_api
-    return @hunks if @hunks
-    @hunks = []
+  def diffs_to_api
+    return @diffs_to_api if @diffs_to_api
+    @diffs_to_api = []
     readme = nil
 
     diffs.each do |diff|
@@ -87,7 +87,7 @@ class Commit < SimpleDelegator
         html = OutputRenderer.diff(lines)
         status = diff.delta.status
 
-        @hunks << {
+        @diffs_to_api << {
           status: status,
           path: path,
           html: html,
@@ -96,9 +96,9 @@ class Commit < SimpleDelegator
     end
 
     # Ensure readme always comes first
-    @hunks.unshift(readme) if readme
+    @diffs_to_api.unshift(readme) if readme
 
-    @hunks
+    @diffs_to_api
   end
 
   # The directory snapshot at the time of this commit.
@@ -117,7 +117,7 @@ class Commit < SimpleDelegator
     {
       title: title,
       body: body,
-      hunks: hunks_to_api,
+      diffs: diffs_to_api,
       snapshot: snapshot,
     }
   end

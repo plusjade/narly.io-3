@@ -2,11 +2,11 @@
   %h1.title {{ title }}
   .body-wrap
     .body {{{ body }}}
-  .hunks-wrap
-    {{# hunks }}
+  .diffs-wrap
+    {{# diffs }}
     %div{ class: "diff-file {{ status }}" }
       .diff-header
         %span {{ path }}
       .diff-content
         {{{ html }}}
-    {{/ hunks }}
+    {{/ diffs }}
