@@ -63,20 +63,23 @@ class Commit < SimpleDelegator
   # h.owner is a Patch
   # h.owner.owner is a Diff
   def hunks_to_api
-    return @hunks if @hunks
+    @hunks ||= diffs.map do |diff|
+      path = diff.delta.new_file[:path]
 
-    @hunks = []
-     diffs.each do |diff|
-      @hunks += diff.each_hunk.map do |hunk|
-        {
-          status: diff.delta.status,
-          path: diff.delta.new_file[:path],
-          html: DiffRenderer.render(hunk.lines),
-        }
+      status = diff.delta.status
+      lines = []
+      diff.each_hunk.each do |hunk|
+        lines += hunk.lines
       end
-    end
 
-    @hunks
+      html = DiffRenderer.render(lines)
+
+      {
+        status: status,
+        path: path,
+        html: html,
+      }
+    end
   end
 
   def hunks_first_commit
