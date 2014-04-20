@@ -5,6 +5,10 @@ gem 'rugged', git: 'git://github.com/libgit2/rugged.git', branch: 'development',
 gem 'haml'
 gem 'redcarpet'
 
+group :development do
+  gem 'capistrano', '~> 3.1.0'
+end
+
 group :assets do
   gem 'sass-rails',   '~> 3'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
