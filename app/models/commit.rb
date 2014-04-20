@@ -56,7 +56,11 @@ class Commit < SimpleDelegator
   # h.owner is a Patch
   # h.owner.owner is a Diff
   def hunks_to_api
-    @hunks ||= diffs.map do |diff|
+    return @hunks if @hunks
+    @hunks = []
+    readme = nil
+
+    diffs.each do |diff|
       path = diff.delta.new_file[:path]
 
       if path.split('.').first.to_s.downcase == "readme"
@@ -69,7 +73,11 @@ class Commit < SimpleDelegator
         end
 
         html = OutputRenderer.markdown(html)
-        status = "readme"
+        readme = {
+          status: "readme",
+          path: path,
+          html: html,
+        }
       else
         lines = []
         diff.each_hunk.each do |hunk|
@@ -78,14 +86,19 @@ class Commit < SimpleDelegator
 
         html = OutputRenderer.diff(lines)
         status = diff.delta.status
-      end
 
-      {
-        status: status,
-        path: path,
-        html: html,
-      }
+        @hunks << {
+          status: status,
+          path: path,
+          html: html,
+        }
+      end
     end
+
+    # Ensure readme always comes first
+    @hunks.unshift(readme) if readme
+
+    @hunks
   end
 
   # The directory snapshot at the time of this commit.
