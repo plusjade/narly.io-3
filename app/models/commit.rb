@@ -59,13 +59,26 @@ class Commit < SimpleDelegator
     @hunks ||= diffs.map do |diff|
       path = diff.delta.new_file[:path]
 
-      status = diff.delta.status
-      lines = []
-      diff.each_hunk.each do |hunk|
-        lines += hunk.lines
-      end
+      if path.split('.').first.to_s.downcase == "readme"
+        html = ''
+        diff.each_hunk do |hunk|
+          hunk.lines.each do |line|
+            next unless line.addition?
+            html += line.content
+          end
+        end
 
-      html = OutputRenderer.diff(lines)
+        html = OutputRenderer.markdown(html)
+        status = "readme"
+      else
+        lines = []
+        diff.each_hunk.each do |hunk|
+          lines += hunk.lines
+        end
+
+        html = OutputRenderer.diff(lines)
+        status = diff.delta.status
+      end
 
       {
         status: status,
@@ -73,32 +86,6 @@ class Commit < SimpleDelegator
         html: html,
       }
     end
-  end
-
-  def hunks_first_commit
-    data = []
-    tree.each_blob do |a|
-      blob = @repo.lookup(a[:oid])
-
-      html = blob.content
-
-      if %w(.md .markdown).include?(File.extname(a[:name]))
-        html = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new,
-                  safe_links_only: true,
-                  filter_html: true,
-                  autolink: true,
-                  fenced_code_blocks: true,
-               ).render(html)
-      end
-
-      data << {
-        status: "readme",
-        path: a[:name],
-        html: html,
-      }
-    end
-
-    data
   end
 
   # The directory snapshot at the time of this commit.
@@ -117,7 +104,7 @@ class Commit < SimpleDelegator
     {
       title: title,
       body: body,
-      hunks: first_commit? ? hunks_first_commit : hunks_to_api,
+      hunks: hunks_to_api,
       snapshot: snapshot,
     }
   end
