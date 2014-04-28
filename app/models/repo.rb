@@ -10,21 +10,38 @@ class Repo < SimpleDelegator
     super(Rugged::Repository.new(path))
   end
 
+  def readme
+    return @readme if @readme
+    h = index.find{ |a| a[:path] =~ /^readme\./i }
+    @readme = Readme.new(h ? lookup(h[:oid]).content : "")
+  end
+
   def first_commit
     @first_commit ||= _commits.first
   end
 
   def commit(sha)
-    Commit.new(lookup(sha), self)
+    Commit.new(lookup(sha), commits_indices[sha], self)
   end
 
   def commits
-    @commits ||= _commits.map do |commit|
+    @commits ||= _commits.each_with_index.map do |commit, i|
                     {
                       sha: commit.oid,
-                      title: commit.message.split(/\n/).first
+                      title: readme.headers_human[i],
+                      index: i
                     }
                   end
+  end
+
+  def commits_indices
+    return @commits_indices if @commits_indices
+    @commits_indices = {}
+    _commits.each_with_index do |commit, i|
+      @commits_indices[commit.oid] = i
+    end
+
+    @commits_indices
   end
 
   def _commits

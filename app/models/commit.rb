@@ -2,7 +2,8 @@ require 'delegate'
 
 class Commit < SimpleDelegator
   # WIP, this is injection is likely unncessary.
-  def initialize(commit, repo)
+  def initialize(commit, index, repo)
+    @index = index.to_i
     @repo = repo
     super(commit)
   end
@@ -58,45 +59,26 @@ class Commit < SimpleDelegator
   def diffs_to_api
     return @diffs_to_api if @diffs_to_api
     @diffs_to_api = []
-    readme = nil
 
     diffs.each do |diff|
       path = diff.delta.new_file[:path]
+      # Presumably only the first commit
+      next if path.split('.').first.to_s.downcase == "readme"
 
-      if path.split('.').first.to_s.downcase == "readme"
-        html = ''
-        diff.each_hunk do |hunk|
-          hunk.lines.each do |line|
-            next unless line.addition?
-            html += line.content
-          end
-        end
-
-        html = OutputRenderer.markdown(html)
-        readme = {
-          status: "readme",
-          path: path,
-          html: html,
-        }
-      else
-        lines = []
-        diff.each_hunk.each do |hunk|
-          lines += hunk.lines
-        end
-
-        html = OutputRenderer.diff(lines)
-        status = diff.delta.status
-
-        @diffs_to_api << {
-          status: status,
-          path: path,
-          html: html,
-        }
+      lines = []
+      diff.each_hunk.each do |hunk|
+        lines += hunk.lines
       end
-    end
 
-    # Ensure readme always comes first
-    @diffs_to_api.unshift(readme) if readme
+      html = OutputRenderer.diff(lines)
+      status = diff.delta.status
+
+      @diffs_to_api << {
+        status: status,
+        path: path,
+        html: html,
+      }
+    end
 
     @diffs_to_api
   end
@@ -113,13 +95,17 @@ class Commit < SimpleDelegator
     end
   end
 
+  def readme
+    @repo.readme.chunk(@index)
+  end
+
   def payload
     {
       title: title,
       body: body,
       diffs: diffs_to_api,
       snapshot: snapshot,
-    }
+    }.merge(readme)
   end
 
   # git ls-tree --name-only -r sha
