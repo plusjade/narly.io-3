@@ -59,11 +59,19 @@ window.Narly = (function() {
         initialize : function() {
             var self = this;
 
+            Backbone.history.start({ pushState: true, silent: true, hashChange : false });
+
             // Left/Right arrow navigation.
             $(document).keydown(function(e) {
                 if ([37, 39].indexOf(e.keyCode) > -1) {
                     var direction = (e.keyCode == 37) ? -1 : 1;
-                    self.collection.getFromActive(direction).fetch();
+                    var model = self.collection.getFromActive(direction);
+
+                    if (Modernizr && Modernizr.history) {
+                        Narly.router.navigate(model.url(), { trigger: false });
+                    }
+
+                    model.fetch();
                     return false;
                 }
             })
@@ -99,6 +107,11 @@ window.Narly = (function() {
         , 
         load : function(e) {
             e.preventDefault();
+
+            if (Modernizr && Modernizr.history) {
+                Narly.router.navigate(this.model.url(), { trigger: false });
+            }
+
             this.model.fetch();
         }
         ,
@@ -156,6 +169,21 @@ window.Narly = (function() {
             this.collection.getNextFromActive().fetch();
         }
     })
+
+    var Router = Backbone.Router.extend({
+
+      routes: {
+        "courses/:course_id/steps/:step": "step"
+      }
+      ,
+      step: function(course_id, step) {
+        var model = Narly.env.commits.at(step.split('-')[0]);
+        if (model) {
+            model.fetch();
+        }
+      }
+    });
+
     return {
         env : {}
         ,
@@ -170,5 +198,7 @@ window.Narly = (function() {
         CommitFullView : CommitFullView
         ,
         TopBar : TopBar
+        ,
+        router : new Router
     }
 })();

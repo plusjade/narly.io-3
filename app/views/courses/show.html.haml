@@ -15,4 +15,4 @@
     var $tableOfContents = new Narly.CommitsView({ collection: Narly.env.commits })
     $("body").append($tableOfContents.render());
     new Narly.TopBar({ el: '#top-bar', collection: Narly.env.commits })
-    Narly.env.commits.at(0).fetch();
+    Narly.env.commits.at(#{ @index.to_i }).fetch();
