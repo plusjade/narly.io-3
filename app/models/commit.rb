@@ -1,6 +1,8 @@
 require 'delegate'
 
 class Commit < SimpleDelegator
+  attr_reader :index
+
   # WIP, this is injection is likely unncessary.
   def initialize(commit, index, repo)
     @index = index.to_i
@@ -103,6 +105,7 @@ class Commit < SimpleDelegator
     {
       title: title,
       body: body,
+      index: @index,
       diffs: diffs_to_api,
       snapshot: snapshot,
     }.merge(readme)

@@ -20,6 +20,13 @@ class Repo < SimpleDelegator
     @first_commit ||= _commits.first
   end
 
+  # commit by step index
+  def step(index)
+    sha = commits_indices.key(index.to_i)
+    raise "No commit found at index #{ index }" unless sha
+    commit(sha)
+  end
+
   def commit(sha)
     Commit.new(lookup(sha), commits_indices[sha], self)
   end
@@ -29,6 +36,7 @@ class Repo < SimpleDelegator
                     {
                       sha: commit.oid,
                       title: readme.headers_human[i],
+                      slug: OutputRenderer.clean_slug_and_escape(readme.headers_human[i]),
                       index: i
                     }
                   end

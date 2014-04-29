@@ -1,6 +1,10 @@
 window.Narly = (function() {
     var Commit = Backbone.Model.extend({
-        idAttribute: 'sha'
+        idAttribute: 'index'
+        ,
+        url : function() {
+            return this.collection.url() + this.id + '-' + this.get('slug');
+        }
         ,
         // TODO: this is only needed to force sync event.
         // Is there a better way? Also we should probably delegate to a cache anyway.
@@ -14,7 +18,7 @@ window.Narly = (function() {
         model: Commit
         ,
         url : function() {
-            return '/courses/' + this.courseName + '/commits/'
+            return '/courses/' + this.courseName + '/steps/';
         }
         ,
         getPrevFromActive : function() {
