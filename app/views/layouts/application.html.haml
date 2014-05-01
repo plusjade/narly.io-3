@@ -5,6 +5,8 @@
   %title Narly
   = stylesheet_link_tag "application", :media => "all"
   <link href='//fonts.googleapis.com/css?family=Nunito:300' rel='stylesheet' type='text/css'>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
   :css
     body {
       font-family: 'Nunito', sans-serif;
@@ -13,7 +15,7 @@
     }
   = csrf_meta_tags
 
-%body
+%body.toc-expand
   = yield
 
   <script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>

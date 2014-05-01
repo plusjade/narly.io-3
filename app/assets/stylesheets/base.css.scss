@@ -2,6 +2,7 @@ $modified-color: #F9CF4F;
 $added-color: #64B73A;
 $deleted-color: #F5A2A2;
 $bold-blue: #1C9EDB;
+$bold-blue-contrast: #1886b9;
 $bold-green: #64B73A;
 
 /*
@@ -15,6 +16,7 @@ body {
 }
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
+  margin:0 0 20px 0;
 }
 #top-bar {
   position:fixed;
@@ -22,7 +24,24 @@ h1, h2, h3, h4, h5, h6 {
   width:100%;
   z-index: 10;
   background-color:#FFF;
-  border-bottom:2px solid $bold-blue;
+  border-bottom: 1px solid $bold-blue;
+  a {
+    border-right:1px solid #eee;
+  }
+  .home {
+    float:right;
+    display:block;
+    line-height: 40px;
+    padding:0 20px;
+    color: $bold-blue;
+    text-decoration: none;
+    border-left:1px solid #eee;
+    border-right: 0;
+    &:hover {
+      color: #FFF;
+      background-color: $bold-blue;
+    }
+  }
   .toc-toggle {
     z-index:10;
     position:absolute;
@@ -32,29 +51,35 @@ h1, h2, h3, h4, h5, h6 {
     padding:0 20px;
     line-height: 40px;
     text-align: center;
-    background-color: $bold-blue;
-    color:#FFF;
+    background-color: #FFF;
+    color: $bold-blue;
     text-decoration: none;
     &:hover {
-      background-color:#444;
+      color: #FFF;
+      background-color: $bold-blue-contrast;
     }
   }
 }
+#top-bar-spacer {
+  height:41px;
+}
 #prev-next {
   z-index:10;
-  position:absolute;
+  position:fixed;
   top:0;
-  right:0;
-  background-color: $bold-blue;
+  left:56px;
+  background-color: #FFF;
   a {
     height: 40px;
-    display: inline-block;
+    display:block;
+    float:right;
     padding: 0 20px;
     line-height: 40px;
-    color: #FFF;
+    color: $bold-blue;
     text-decoration: none;
     &:hover {
-      background-color:#444;
+      color: #FFF;
+      background-color: $bold-blue;
     }
     &.prev {
 
@@ -63,6 +88,34 @@ h1, h2, h3, h4, h5, h6 {
 
     }
 
+  }
+}
+
+#container {
+  width:100%;
+  position:relative;
+  overflow:visible;
+}
+#prev-next-bottom {
+  clear:both;
+  width:80px;
+  height:40px;
+  margin:auto;
+  margin-bottom: 40px;
+
+  a {
+    display:block;
+    float:right;
+    height: 40px;
+    width:40px;
+    line-height: 40px;
+    color: $bold-blue;
+    text-decoration: none;
+    text-align: center;
+    font-size: 40px;
+    &:hover {
+      color: $bold-blue-contrast;
+    }
   }
 }
 
@@ -83,12 +136,13 @@ h1, h2, h3, h4, h5, h6 {
   padding:0;
   margin: 0;
   overflow: auto;
-  border-right:2px solid $bold-blue;
-  font-size: 14px;
+  border-right:1px solid #eee;
+  background-color: #FBF8F5;
+  font-size: 13px;
   li {
     list-style-position: inside;
     color: #555;
-    border-bottom:1px solid #FBF8F5;
+    border-bottom:1px solid #eee;
     &:hover, &.active {
       color:#FFF;
       a {
@@ -112,76 +166,26 @@ body.toc-expand {
   #table-of-contents {
     display:block;
   }
-  #main-commit-container {
-    left:300px;
-  }
+}
+
+#secondary-wrap {
+  float:right;
+  width:25%;
   #world {
-    left: 81%;
+    padding:20px;
+
+    h5 {
+      margin:0;
+    }
   }
 }
 
 #main-commit-container {
-  position:absolute;
-  top:41px;
-  left:0;
-  right:0;
-  margin-bottom: 40px;
-  overflow: hidden;
-  .title {
-    margin:0;
-    position:fixed;
-    left:70px;
-    top:0px;
-    z-index:11;
-    background-color:#FFF;
-    height:40px;
-    line-height:40px;
-    color: #1C9EDB;
-    font-size: 20px;
-  }
-  .body-wrap {
-    float:left;
-    width:25%;
-    .body {
-      padding:15px;
-      background-color: #FFF;
-      line-height: 1.5em;
-      color: #444;
-    }
-  }
+  width:50%;
+  float:right;
 
-  .diffs-wrap {
-    width:50%;
-    float:right;
-    margin-top: 20px;
-    .hunk {
-      margin-bottom:10px;
-      border-left:5px solid;
-      border-top:1px solid;
-      overflow: auto;
-
-      &.modified {
-        border-color:#F9CF4F;
-      }
-      &.deleted {
-        border-color:#F5A2A2;
-      }
-      &.added {
-        border-color:#64B73A;
-      }
-    }
-
-    .diff-file {
-      &.modified .diff-header {
-        border-bottom:2px solid $modified-color;
-      }
-      &.deleted .diff-header {
-        border-bottom:2px solid $deleted-color;
-      }
-      &.added .diff-header{
-        border-bottom:2px solid $added-color;
-      }
-    }
+  .section-inner {
+    padding:20px;
   }
 }
 
@@ -202,4 +206,28 @@ table {
       background-color: #FDD;
     }
   }  
+}
+
+
+
+@media all and (max-width: 767px) {
+  #table-of-contents {
+    display:none !important;
+  }
+  #secondary-wrap {
+    float:none;
+    width:100%;
+    height:300px;
+    overflow: auto;
+    border-bottom:1px solid #ccc;
+  }
+  #main-commit-container {
+    float:none;
+    width:100%;
+  }
+}
+
+@media all and (min-width: 767px) {
+  #left-pane {
+    display: block !important; }
 }

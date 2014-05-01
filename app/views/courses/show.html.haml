@@ -1,10 +1,26 @@
 #top-bar
-  %a.toc-toggle{ href: "#" } &#12448;
+  %a.home{ href: "/" } More Courses
+  %a.toc-toggle{ href: "#" }
+    %i.fa.fa-bars
   #prev-next
-    %a.prev{ href: "#" } &#9664;
-    %a.next{ href: "#" } &#9654;
-#world
-#main-commit-container
+    %a.next{ href: "#" }
+      %i.fa.fa-chevron-right
+    %a.prev{ href: "#" }
+      %i.fa.fa-chevron-left
+
+#top-bar-spacer
+#container
+  #secondary-wrap
+    #world
+      %div
+        File Tree Snapshot
+  #main-commit-container.section-two-wrap
+  #prev-next-bottom
+    %a.next{ href: "#" }
+      %i.fa.fa-chevron-right
+    %a.prev{ href: "#" }
+      %i.fa.fa-chevron-left
+
 
 = render partial: "templates/main-commit"
 
@@ -16,4 +32,5 @@
     $("body").append($tableOfContents.render());
     new Narly.TopBar({ el: '#top-bar' });
     new Narly.PrevNextView({ el: '#prev-next', collection: Narly.env.commits });
+    new Narly.PrevNextView({ el: '#prev-next-bottom', collection: Narly.env.commits });
     Narly.env.commits.at(#{ @index.to_i }).fetch();
