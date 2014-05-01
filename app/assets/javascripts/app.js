@@ -68,6 +68,7 @@ window.Narly = (function() {
                     var model = self.collection.getFromActive(direction);
                     Narly.router.update(model.url());
                     model.fetch();
+                    Narly.$body.scrollTop(0);
 
                     return false;
                 }
@@ -106,6 +107,7 @@ window.Narly = (function() {
             e.preventDefault();
             this.model.fetch();
             Narly.router.update(this.model.url());
+            Narly.$body.scrollTop(0);
         }
         ,
         expand : function() {
@@ -162,6 +164,7 @@ window.Narly = (function() {
             var model = this.collection.getPrevFromActive();
             model.fetch();
             Narly.router.update(model.url());
+            Narly.$body.scrollTop(0);
         }
         ,
         next : function(e) {
@@ -169,6 +172,7 @@ window.Narly = (function() {
             var model = this.collection.getNextFromActive();
             model.fetch();
             Narly.router.update(model.url());
+            Narly.$body.scrollTop(0);
         }
     })
 
@@ -194,6 +198,8 @@ window.Narly = (function() {
 
 
     return {
+        $body : $('body')
+        ,
         env : {}
         ,
         Commit : Commit
