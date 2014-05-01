@@ -14,5 +14,6 @@
     Narly.env.commits.courseName = '#{ @repo.name }';
     var $tableOfContents = new Narly.CommitsView({ collection: Narly.env.commits })
     $("body").append($tableOfContents.render());
-    new Narly.TopBar({ el: '#top-bar', collection: Narly.env.commits })
+    new Narly.TopBar({ el: '#top-bar' });
+    new Narly.PrevNextView({ el: '#prev-next', collection: Narly.env.commits });
     Narly.env.commits.at(#{ @index.to_i }).fetch();

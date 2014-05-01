@@ -66,12 +66,9 @@ window.Narly = (function() {
                 if ([37, 39].indexOf(e.keyCode) > -1) {
                     var direction = (e.keyCode == 37) ? -1 : 1;
                     var model = self.collection.getFromActive(direction);
-
-                    if (Modernizr && Modernizr.history) {
-                        Narly.router.navigate(model.url(), { trigger: false });
-                    }
-
+                    Narly.router.update(model.url());
                     model.fetch();
+
                     return false;
                 }
             })
@@ -107,12 +104,8 @@ window.Narly = (function() {
         , 
         load : function(e) {
             e.preventDefault();
-
-            if (Modernizr && Modernizr.history) {
-                Narly.router.navigate(this.model.url(), { trigger: false });
-            }
-
             this.model.fetch();
+            Narly.router.update(this.model.url());
         }
         ,
         expand : function() {
@@ -146,27 +139,36 @@ window.Narly = (function() {
     })
 
     var TopBar = Backbone.View.extend({
-        collection : Commits
-        ,
         events : {
-            'click a.toc-toggle' : 'tocToggle',
-            'click a.prev' : 'prev',
-            'click a.next' : 'next'
+            'click a.toc-toggle' : 'tocToggle'
         }
         ,
         tocToggle : function(e) {
           e.preventDefault();
           $('body').toggleClass('toc-expand');
         }
+    });
+
+    var PrevNextView = Backbone.View.extend({
+        collection : Commits
+        ,
+        events : {
+            'click a.prev' : 'prev',
+            'click a.next' : 'next'
+        }
         ,
         prev : function(e) {
             e.preventDefault();
-            this.collection.getPrevFromActive().fetch();
+            var model = this.collection.getPrevFromActive();
+            model.fetch();
+            Narly.router.update(model.url());
         }
         ,
         next : function(e) {
             e.preventDefault();
-            this.collection.getNextFromActive().fetch();
+            var model = this.collection.getNextFromActive();
+            model.fetch();
+            Narly.router.update(model.url());
         }
     })
 
@@ -182,7 +184,14 @@ window.Narly = (function() {
             model.fetch();
         }
       }
+      ,
+      update : function(url) {
+        if (Modernizr && Modernizr.history) {
+            this.navigate(url, { trigger: false });
+        }
+      }
     });
+
 
     return {
         env : {}
@@ -198,6 +207,8 @@ window.Narly = (function() {
         CommitFullView : CommitFullView
         ,
         TopBar : TopBar
+        ,
+        PrevNextView : PrevNextView
         ,
         router : new Router
     }
