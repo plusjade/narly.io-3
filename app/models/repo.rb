@@ -1,7 +1,7 @@
 require 'delegate'
 
 class Repo < SimpleDelegator
-  attr_reader :first_commit, :name
+  attr_reader :name
 
   def initialize(name)
     raise "Repo name not defined" unless name
@@ -21,11 +21,6 @@ class Repo < SimpleDelegator
     @readme = Readme.new(content)
   end
 
-  def first_commit
-    @first_commit ||= _commits.first
-  end
-
-  # commit by step index
   def step(index)
     sha = commits_indices.key(index.to_i)
     raise "No commit found at index #{ index }" unless sha

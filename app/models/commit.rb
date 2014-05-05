@@ -10,10 +10,6 @@ class Commit < SimpleDelegator
     super(commit)
   end
 
-  def first_commit?
-    @repo.first_commit.oid == oid
-  end
-
   def title
     @title ||= message.split(/\n/).first
   end
