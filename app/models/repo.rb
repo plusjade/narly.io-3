@@ -21,25 +21,17 @@ class Repo < SimpleDelegator
     @readme = Readme.new(content)
   end
 
+  def steps
+    @steps ||= readme.steps
+  end
+
   def step(index)
-    sha = commits_indices.key(index.to_i)
-    raise "No commit found at index #{ index }" unless sha
-    commit(sha)
+    Step.new(index, self)
   end
 
-  def commit(sha)
-    Commit.new(lookup(sha), commits_indices[sha], self)
-  end
-
-  def commits
-    @commits ||= _commits.each_with_index.map do |commit, i|
-                    {
-                      sha: commit.oid,
-                      title: readme.headers_human[i],
-                      slug: OutputRenderer.clean_slug_and_escape(readme.headers_human[i]),
-                      index: i
-                    }
-                  end
+  def commit_at(index)
+    return nil unless commits_indices.has_value?(index)
+    Commit.new(lookup(commits_indices.key(index)), self)
   end
 
   def commits_indices

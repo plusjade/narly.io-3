@@ -5,6 +5,16 @@ class Readme
     @total_lines = @content.present? ? @content.lines.count : 0
   end
 
+  def steps
+    headers_human.each_with_index.map do |header, i|
+      {
+        title: header,
+        slug: OutputRenderer.clean_slug_and_escape(header),
+        index: i
+      }
+    end
+  end
+
   def chunk(index)
     parse_chunk(index)
   end

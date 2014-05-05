@@ -26,9 +26,9 @@
 
 - content_for :page_javascripts do
   :plain
-    Narly.env.commits = new Narly.Commits(#{ @repo.commits.to_json.html_safe });
+    Narly.env.commits = new Narly.Steps(#{ @repo.steps.to_json.html_safe });
     Narly.env.commits.courseName = '#{ @repo.name }';
-    var $tableOfContents = new Narly.CommitsView({ collection: Narly.env.commits })
+    var $tableOfContents = new Narly.StepsView({ collection: Narly.env.commits })
     $("body").append($tableOfContents.render());
     new Narly.TopBar({ el: '#top-bar' });
     new Narly.PrevNextView({ el: '#prev-next', collection: Narly.env.commits });

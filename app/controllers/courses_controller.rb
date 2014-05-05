@@ -9,17 +9,17 @@ class CoursesController < ApplicationController
 
   def steps
     repo = Repo.new(params[:id])
-    commit = repo.step(params[:step_id])
+    step = repo.step(params[:step_id])
 
     respond_to do |format|
       format.html do
         @repo = repo
-        @index = commit ? commit.index : 0
+        @index = step ? step.index : 0
 
         render template: "courses/show"
       end
       format.json do
-        render json: { commit: commit.payload }
+        render json: { step: step.payload }
       end
     end
   end

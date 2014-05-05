@@ -1,5 +1,5 @@
 window.Narly = (function() {
-    var Commit = Backbone.Model.extend({
+    var Step = Backbone.Model.extend({
         idAttribute: 'index'
         ,
         url : function() {
@@ -9,13 +9,13 @@ window.Narly = (function() {
         // TODO: this is only needed to force sync event.
         // Is there a better way? Also we should probably delegate to a cache anyway.
         parse : function(rsp) {
-            rsp.commit.entropy = Math.random();
-            return rsp.commit;
+            rsp.step.entropy = Math.random();
+            return rsp.step;
         }
     })
 
-    var Commits = Backbone.Collection.extend({
-        model: Commit
+    var Steps = Backbone.Collection.extend({
+        model: Step
         ,
         url : function() {
             return '/courses/' + this.courseName + '/steps/';
@@ -47,8 +47,8 @@ window.Narly = (function() {
         }
     })
 
-    var CommitsView = Backbone.View.extend({
-        collection : Commits
+    var StepsView = Backbone.View.extend({
+        collection : Steps
         ,
         tagName: "ol"
         ,
@@ -78,7 +78,7 @@ window.Narly = (function() {
         render : function() {
             var cache = [];
             this.collection.each(function(model) {
-              cache.push(new Narly.CommitView({ model : model }).render());
+              cache.push(new Narly.StepView({ model : model }).render());
             })
             $.fn.append.apply(this.$el.empty(), cache);
 
@@ -86,7 +86,7 @@ window.Narly = (function() {
         }
     })
 
-    var CommitView = Backbone.View.extend({
+    var StepView = Backbone.View.extend({
         tagName: "li"
         ,
         events : {
@@ -112,7 +112,7 @@ window.Narly = (function() {
         ,
         expand : function() {
             this.model.collection.activeId = this.model.id;
-            var view = new Narly.CommitFullView({ model : this.model }).render();
+            var view = new Narly.StepFullView({ model : this.model }).render();
             $("#main-commit-container").html(view);
         }
         ,
@@ -122,8 +122,8 @@ window.Narly = (function() {
         }
     })
 
-    var CommitFullView = Backbone.View.extend({
-        model : Commit
+    var StepFullView = Backbone.View.extend({
+        model : Step
         ,
         attributes : {
             id: "commit-container"
@@ -154,7 +154,7 @@ window.Narly = (function() {
     });
 
     var PrevNextView = Backbone.View.extend({
-        collection : Commits
+        collection : Steps
         ,
         events : {
             'click a.prev' : 'prev',
@@ -204,15 +204,15 @@ window.Narly = (function() {
         ,
         env : {}
         ,
-        Commit : Commit
+        Step : Step
         ,
-        Commits : Commits
+        Steps : Steps
         ,
-        CommitsView : CommitsView
+        StepsView : StepsView
         ,
-        CommitView : CommitView
+        StepView : StepView
         ,
-        CommitFullView : CommitFullView
+        StepFullView : StepFullView
         ,
         TopBar : TopBar
         ,

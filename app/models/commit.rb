@@ -1,11 +1,9 @@
 require 'delegate'
 
 class Commit < SimpleDelegator
-  attr_reader :index
 
   # WIP, this is injection is likely unncessary.
-  def initialize(commit, index, repo)
-    @index = index.to_i
+  def initialize(commit, repo)
     @repo = repo
     super(commit)
   end
@@ -93,18 +91,11 @@ class Commit < SimpleDelegator
     end
   end
 
-  def readme
-    @repo.readme.chunk(@index)
-  end
-
   def payload
     {
-      title: title,
-      body: body,
-      index: @index,
       diffs: diffs_to_api,
       snapshot: snapshot,
-    }.merge(readme)
+    }
   end
 
   # git ls-tree --name-only -r sha
