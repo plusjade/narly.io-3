@@ -17,12 +17,10 @@ window.Visualizer = (function() {
                 .attr("transform", "translate(" + margin + "," + margin + ")");
 
     function update(data) {
-        console.log('d3 beaning!');
         data.forEach(function(d, i) {
             d.indentLevel = d.path.split('/').length - 1;
             d.position = i;
         });
-        console.log(data);
 
         // Dynamically build the viewport and scaling based on dataset.
         var height = 20 + (data.length * nodeHeight * 2);
