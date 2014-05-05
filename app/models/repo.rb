@@ -12,8 +12,13 @@ class Repo < SimpleDelegator
 
   def readme
     return @readme if @readme
-    h = index.find{ |a| a[:path] =~ /^readme\./i }
-    @readme = Readme.new(h ? lookup(h[:oid]).content : "")
+    content = ''
+    FileUtils.cd(workdir) do
+      path = Dir['*'].find{ |a| a =~ /^readme\./i }
+      content = File.open(path, 'r:UTF-8') { |f| f.read }
+    end
+
+    @readme = Readme.new(content)
   end
 
   def first_commit
