@@ -96,28 +96,6 @@ h1, h2, h3, h4, h5, h6 {
   position:relative;
   overflow:visible;
 }
-#prev-next-bottom {
-  clear:both;
-  width:80px;
-  height:40px;
-  margin:auto;
-  margin-bottom: 40px;
-
-  a {
-    display:block;
-    float:right;
-    height: 40px;
-    width:40px;
-    line-height: 40px;
-    color: $bold-blue;
-    text-decoration: none;
-    text-align: center;
-    font-size: 40px;
-    &:hover {
-      color: $bold-blue-contrast;
-    }
-  }
-}
 
 #footer {
   clear:both;

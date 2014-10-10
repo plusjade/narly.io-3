@@ -11,11 +11,6 @@
 #top-bar-spacer
 #container
   #main-commit-container.section-two-wrap
-  #prev-next-bottom
-    %a.next{ href: "#" }
-      %i.fa.fa-chevron-right
-    %a.prev{ href: "#" }
-      %i.fa.fa-chevron-left
 
 
 = render partial: "templates/main-commit"
@@ -28,5 +23,4 @@
     $("body").append($tableOfContents.render());
     new Narly.TopBar({ el: '#top-bar' });
     new Narly.PrevNextView({ el: '#prev-next', collection: Narly.env.commits });
-    new Narly.PrevNextView({ el: '#prev-next-bottom', collection: Narly.env.commits });
     Narly.env.commits.at(#{ @index.to_i }).fetch();
