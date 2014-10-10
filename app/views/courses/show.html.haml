@@ -1,12 +1,11 @@
 #top-bar
   %a.home{ href: "/" } More Courses
-  %a.toc-toggle{ href: "#" }
-    %i.fa.fa-bars
   #prev-next
     %a.next{ href: "#" }
       %i.fa.fa-chevron-right
     %a.prev{ href: "#" }
       %i.fa.fa-chevron-left
+  #step-status
 
 #top-bar-spacer
 #container
@@ -20,7 +19,7 @@
     Narly.env.commits = new Narly.Steps(#{ @repo.steps.to_json.html_safe });
     Narly.env.commits.courseName = '#{ @repo.name }';
     var $tableOfContents = new Narly.StepsView({ collection: Narly.env.commits })
-    $("body").append($tableOfContents.render());
+    $tableOfContents.render()
     new Narly.TopBar({ el: '#top-bar' });
     new Narly.PrevNextView({ el: '#prev-next', collection: Narly.env.commits });
     Narly.env.commits.at(#{ @index.to_i }).fetch();

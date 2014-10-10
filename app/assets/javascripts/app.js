@@ -47,6 +47,13 @@ window.Narly = (function() {
         }
     })
 
+    function updateStep(model) {
+        Narly.router.update(model.url());
+        Narly.$body.scrollTop(0);
+        $("#step-status")
+            .text("step " + (model.get('index') + 1) + " of " + Narly.env.commits.length);
+    }
+
     var StepsView = Backbone.View.extend({
         collection : Steps
         ,
@@ -66,9 +73,8 @@ window.Narly = (function() {
                 if ([37, 39].indexOf(e.keyCode) > -1) {
                     var direction = (e.keyCode == 37) ? -1 : 1;
                     var model = self.collection.getFromActive(direction);
-                    Narly.router.update(model.url());
                     model.fetch();
-                    Narly.$body.scrollTop(0);
+                    updateStep(model);
 
                     return false;
                 }
@@ -164,16 +170,14 @@ window.Narly = (function() {
             e.preventDefault();
             var model = this.collection.getPrevFromActive();
             model.fetch();
-            Narly.router.update(model.url());
-            Narly.$body.scrollTop(0);
+            updateStep(model);
         }
         ,
         next : function(e) {
             e.preventDefault();
             var model = this.collection.getNextFromActive();
             model.fetch();
-            Narly.router.update(model.url());
-            Narly.$body.scrollTop(0);
+            updateStep(model);
         }
     })
 
