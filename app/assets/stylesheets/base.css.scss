@@ -13,6 +13,7 @@ http://www.colourlovers.com/palette/74212/Scrimshaw
 body {
   padding:0;
   margin:0;
+  background-color: #FFF;
 }
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
@@ -153,12 +154,20 @@ body.toc-expand {
 }
 
 #main-commit-container {
-  width:50%;
-  float:right;
-
+  width: 100%;
+  overflow: auto;
   .section-inner {
     padding:20px;
   }
+}
+#lesson-pane {
+  width: 30%;
+  float: left;
+}
+
+#code-pane {
+  width: 70%;
+  float: left;
 }
 
 table {

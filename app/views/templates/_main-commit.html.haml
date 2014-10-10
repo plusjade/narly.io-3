@@ -1,21 +1,23 @@
 %script{ id: "commit-container-template", type: "x-template" }
-  .section-inner
-    .readme-content
-      {{{ lesson }}}
-    .diffs-wrap
-      {{# hasDiffs }}
-      %h2.section-heading File Changes
-      {{/ hasDiffs }}
-      {{# diffs }}
-      .diff-file{ class: "{{ status }}" }
-        .diff-header
-          %span {{ path }}
-        .diff-content
-          {{{ html }}}
-      {{/ diffs }}
-    .readme-content
+  #lesson-pane
+    .section-inner
+      .readme-content
+        {{{ lesson }}}
+  #code-pane
+    .section-inner
+      .diffs-wrap
+        {{# hasDiffs }}
+        %h3.section-heading File Changes
+        {{/ hasDiffs }}
+        {{# diffs }}
+        .diff-file{ class: "{{ status }}" }
+          .diff-header
+            %span {{ path }}
+          .diff-content
+            {{{ html }}}
+        {{/ diffs }}
       {{# output }}
-      %h2.section-heading
-        Expected Output
+      %h3.section-heading Expected Output
       {{/ output }}
-      {{{ output }}}
+      .readme-content
+        {{{ output }}}
