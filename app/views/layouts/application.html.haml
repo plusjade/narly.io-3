@@ -20,11 +20,18 @@
 %body.toc-expand
   = yield
 
-  <script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
-  <script src="http://d3js.org/d3.v3.min.js"></script>
+  - if Rails.env.production?
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/0.7.2/mustache.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  - else
+    <script src='/assets/offline/jquery.min.js'></script>
+    <script src="/assets/offline/mustache.min.js"></script>
+    <script src="/assets/offline/underscore-min.js"></script>
+    <script src="/assets/offline/backbone-min.js"></script>
+    <script src="/assets/offline/d3.v3.min.js"></script>
   = javascript_include_tag "application"
   :javascript
     $(function() {
