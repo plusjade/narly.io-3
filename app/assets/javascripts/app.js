@@ -134,7 +134,6 @@ window.Narly = (function() {
         }
         , 
         render : function() {
-            window.Visualizer.update(this.model.get('snapshot'));
             var payload = this.model.attributes;
             payload.hasDiffs = payload.diffs.length > 0;
             var content = Mustache.render(this.template, payload);

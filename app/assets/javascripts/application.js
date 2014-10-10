@@ -12,4 +12,3 @@
 //
 //= require ./modernizr.custom.39675
 //= require ./app
-//= require ./visualizer

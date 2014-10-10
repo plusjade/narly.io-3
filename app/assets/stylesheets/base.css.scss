@@ -168,18 +168,6 @@ body.toc-expand {
   }
 }
 
-#secondary-wrap {
-  float:right;
-  width:25%;
-  #world {
-    padding:20px;
-
-    h5 {
-      margin:0;
-    }
-  }
-}
-
 #main-commit-container {
   width:50%;
   float:right;
@@ -213,13 +201,6 @@ table {
 @media all and (max-width: 767px) {
   #table-of-contents {
     display:none !important;
-  }
-  #secondary-wrap {
-    float:none;
-    width:100%;
-    height:300px;
-    overflow: auto;
-    border-bottom:1px solid #ccc;
   }
   #main-commit-container {
     float:none;
