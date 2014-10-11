@@ -30,11 +30,25 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 10;
   background-color: #d2cfc6;
 }
-#top-bar-spacer {
-  height:41px;
+#start-over {
+  position: absolute;
+  left: 0;
+  height: 40px;
+  width: 48px;
+  background-color: #9e9e9e;
+  cursor: pointer;
+  &:hover {
+    background-color: #757575;
+  }
+  svg {
+    width: 22px;
+    height: 22px;
+    display: block;
+    margin: 9px auto 0 auto;
+    fill: #e0e0e0;
+  }
 }
 #prev-next {
-  z-index:10;
   position: absolute;
   right:0;
   background-color: #FFF;

@@ -70,6 +70,14 @@ window.Narly = (function() {
                     .next('textarea')
                         .toggle();
             });
+            $('#start-over').click(function(e) {
+                self
+                    .collection
+                    .at(0)
+                    .fetch();
+
+                e.preventDefault();
+            })
 
             this.collection.each(function(model) {
               new Narly.StepView({ model : model });
