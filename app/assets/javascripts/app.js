@@ -57,14 +57,12 @@ window.Narly = (function() {
     var StepsView = Backbone.View.extend({
         collection : Steps
         ,
-        tagName: "ol"
-        ,
-        attributes : {
-            id: "table-of-contents"
-        }
-        ,
         initialize : function() {
             var self = this;
+
+            this.collection.each(function(model) {
+              new Narly.StepView({ model : model });
+            })
 
             Backbone.history.start({ pushState: true, silent: true, hashChange : false });
 
@@ -80,55 +78,9 @@ window.Narly = (function() {
                 }
             })
         }
-        , 
-        render : function() {
-            var cache = [];
-            this.collection.each(function(model) {
-              cache.push(new Narly.StepView({ model : model }).render());
-            })
-            $.fn.append.apply(this.$el.empty(), cache);
-
-            return this.$el;
-        }
     })
 
     var StepView = Backbone.View.extend({
-        tagName: "li"
-        ,
-        events : {
-            'click a' : 'load'
-        }
-        ,
-        initialize : function() {
-            this.model.on('change', this.expand, this);
-            this.model.on('sync', this.active, this);
-        }
-        , 
-        render : function() {
-            var content = Mustache.render('<a href="#">{{ title }}</a>', this.model.attributes);
-            return this.$el.html(content);
-        }
-        , 
-        load : function(e) {
-            e.preventDefault();
-            this.model.fetch();
-            Narly.router.update(this.model.url());
-            Narly.$body.scrollTop(0);
-        }
-        ,
-        expand : function() {
-            this.model.collection.activeId = this.model.id;
-            var view = new Narly.StepFullView({ model : this.model }).render();
-            $("#main-commit-container").html(view);
-        }
-        ,
-        active : function() {
-            this.$el.siblings('li').removeClass('active');
-            this.$el.addClass('active');
-        }
-    })
-
-    var StepFullView = Backbone.View.extend({
         model : Step
         ,
         attributes : {
@@ -136,14 +88,19 @@ window.Narly = (function() {
         }
         ,
         initialize : function() {
-            this.template = $("#commit-container-template").html()
+            this.model.on('change', this.render, this);
+            this.template = $("#commit-container-template").html();
         }
         , 
         render : function() {
+            this.model.collection.activeId = this.model.id;
+
             var payload = this.model.attributes;
             payload.hasDiffs = payload.diffs.length > 0;
             var content = Mustache.render(this.template, payload);
-            return this.$el.html(content);
+            var view = this.$el.html(content);
+
+            $("#main-commit-container").html(view);
         }
     })
 
@@ -214,8 +171,6 @@ window.Narly = (function() {
         StepsView : StepsView
         ,
         StepView : StepView
-        ,
-        StepFullView : StepFullView
         ,
         TopBar : TopBar
         ,

@@ -18,8 +18,7 @@
   :plain
     Narly.env.commits = new Narly.Steps(#{ @repo.steps.to_json.html_safe });
     Narly.env.commits.courseName = '#{ @repo.name }';
-    var $tableOfContents = new Narly.StepsView({ collection: Narly.env.commits })
-    $tableOfContents.render()
+    new Narly.StepsView({ collection: Narly.env.commits });
     new Narly.TopBar({ el: '#top-bar' });
     new Narly.PrevNextView({ el: '#prev-next', collection: Narly.env.commits });
     Narly.env.commits.at(#{ @index.to_i }).fetch();
