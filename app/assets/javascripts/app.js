@@ -3,7 +3,7 @@ window.Narly = (function() {
         idAttribute: 'index'
         ,
         url : function() {
-            return this.collection.url() + this.id + '-' + this.get('slug');
+            return this.collection.url() + this.id
         }
         ,
         // TODO: this is only needed to force sync event.
@@ -45,6 +45,16 @@ window.Narly = (function() {
 
             return this.at(index);
         }
+        ,
+        // Hash represents a step # (not index).
+        fetchFromHash : function(hash) {
+            var step = (hash === '') ? 1 : hash.replace('#', '')*1;
+            if(_.isNaN(step)){ step = 1 };
+            // convert to index.
+            step = (step-1) < 1 ? 0 : step-1;
+
+            return this.at(step).fetch();
+        }
     })
 
     // Steps collection View
@@ -57,8 +67,6 @@ window.Narly = (function() {
             this.collection.each(function(model) {
               new Narly.StepView({ model : model });
             })
-
-            Backbone.history.start({ pushState: true, silent: true, hashChange : false });
 
             // Left/Right arrow navigation.
             $(document).keydown(function(e) {
@@ -97,12 +105,13 @@ window.Narly = (function() {
 
             $("#main-commit-container").html(view);
 
-            Narly.router.update(this.model.url());
+            window.location.hash = (this.model.get('index') + 1);
+
             Narly.$body.scrollTop(0);
             $("#step-status")
                 .text(
                     "step " + (this.model.get('index') + 1)
-                    + " of " + Narly.env.commits.length
+                    + " of " + this.model.collection.length
                 );
         }
     })
@@ -143,27 +152,6 @@ window.Narly = (function() {
         }
     })
 
-    var Router = Backbone.Router.extend({
-
-      routes: {
-        "courses/:course_id/steps/:step": "step"
-      }
-      ,
-      step: function(course_id, step) {
-        var model = Narly.env.commits.at(step.split('-')[0]);
-        if (model) {
-            model.fetch();
-        }
-      }
-      ,
-      update : function(url) {
-        if (Modernizr && Modernizr.history) {
-            this.navigate(url, { trigger: false });
-        }
-      }
-    });
-
-
     return {
         $body : $('body')
         ,
@@ -180,7 +168,5 @@ window.Narly = (function() {
         TopBar : TopBar
         ,
         PrevNextView : PrevNextView
-        ,
-        router : new Router
     }
 })();

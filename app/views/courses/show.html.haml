@@ -26,4 +26,4 @@
     new Narly.StepsView({ collection: Narly.env.commits });
     new Narly.TopBar({ el: '#top-bar' });
     new Narly.PrevNextView({ el: '#prev-next', collection: Narly.env.commits });
-    Narly.env.commits.at(#{ @index.to_i }).fetch();
+    Narly.env.commits.fetchFromHash(window.location.hash);
