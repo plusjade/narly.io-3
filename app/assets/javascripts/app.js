@@ -47,13 +47,7 @@ window.Narly = (function() {
         }
     })
 
-    function updateStep(model) {
-        Narly.router.update(model.url());
-        Narly.$body.scrollTop(0);
-        $("#step-status")
-            .text("step " + (model.get('index') + 1) + " of " + Narly.env.commits.length);
-    }
-
+    // Steps collection View
     var StepsView = Backbone.View.extend({
         collection : Steps
         ,
@@ -70,9 +64,10 @@ window.Narly = (function() {
             $(document).keydown(function(e) {
                 if ([37, 39].indexOf(e.keyCode) > -1) {
                     var direction = (e.keyCode == 37) ? -1 : 1;
-                    var model = self.collection.getFromActive(direction);
-                    model.fetch();
-                    updateStep(model);
+                    self
+                        .collection
+                        .getFromActive(direction)
+                        .fetch();
 
                     return false;
                 }
@@ -101,6 +96,14 @@ window.Narly = (function() {
             var view = this.$el.html(content);
 
             $("#main-commit-container").html(view);
+
+            Narly.router.update(this.model.url());
+            Narly.$body.scrollTop(0);
+            $("#step-status")
+                .text(
+                    "step " + (this.model.get('index') + 1)
+                    + " of " + Narly.env.commits.length
+                );
         }
     })
 
@@ -125,16 +128,18 @@ window.Narly = (function() {
         ,
         prev : function(e) {
             e.preventDefault();
-            var model = this.collection.getPrevFromActive();
-            model.fetch();
-            updateStep(model);
+            this
+                .collection
+                .getPrevFromActive()
+                .fetch();
         }
         ,
         next : function(e) {
             e.preventDefault();
-            var model = this.collection.getNextFromActive();
-            model.fetch();
-            updateStep(model);
+            this
+                .collection
+                .getNextFromActive()
+                .fetch();
         }
     })
 
