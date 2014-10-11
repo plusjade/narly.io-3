@@ -9,7 +9,7 @@
         {{# diffs }}
         .diff-file{ class: "{{ status }}" }
           %span.show-content{ href: '#' } view file
-          %textarea.file-content
+          %textarea.file-content{ spellcheck: 'false' }
             {{{ content }}}
           .diff-header
             %strong {{ path }}

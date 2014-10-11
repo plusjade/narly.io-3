@@ -4,70 +4,39 @@ $deleted-color: #F5A2A2;
 $bold-blue: #1C9EDB;
 $bold-blue-contrast: #1886b9;
 $bold-green: #64B73A;
+$orange: #ff5722;
 
 /*
 http://www.colourlovers.com/palette/3304711/Moja_prva
 http://www.colourlovers.com/palette/74212/Scrimshaw
 */
 
+html, body {
+  height: 100%;
+}
 body {
   padding:0;
   margin:0;
-  background-color: #FFF;
+  background-color: #efeeeb;
 }
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   margin:0 0 20px 0;
 }
 #top-bar {
-  position:fixed;
-  height:40px;
-  width:100%;
+  position: absolute;
+  height: 40px;
+  width: 30%;
   z-index: 10;
-  background-color:#FFF;
-  border-bottom: 1px solid $bold-blue;
-  a {
-    border-right:1px solid #eee;
-  }
-  .home {
-    float:right;
-    display:block;
-    line-height: 40px;
-    padding:0 20px;
-    color: $bold-blue;
-    text-decoration: none;
-    border-left:1px solid #eee;
-    border-right: 0;
-    &:hover {
-      color: #FFF;
-      background-color: $bold-blue;
-    }
-  }
-  .toc-toggle {
-    z-index:10;
-    position:absolute;
-    top:0;
-    left:0;
-    display:block;
-    padding:0 20px;
-    line-height: 40px;
-    text-align: center;
-    background-color: #FFF;
-    color: $bold-blue;
-    text-decoration: none;
-    &:hover {
-      color: #FFF;
-      background-color: $bold-blue-contrast;
-    }
-  }
+  background-color: #d2cfc6;
 }
 #top-bar-spacer {
   height:41px;
 }
 #prev-next {
   z-index:10;
-  position:fixed;
-  top:0;
+  position: absolute;
+  right:0;
   background-color: #FFF;
   a {
     height: 40px;
@@ -75,11 +44,11 @@ h1, h2, h3, h4, h5, h6 {
     float:right;
     padding: 0 20px;
     line-height: 40px;
-    color: $bold-blue;
+    color: #FFF;
+    background-color: $orange;
     text-decoration: none;
     &:hover {
-      color: #FFF;
-      background-color: $bold-blue;
+      background-color: #ff3d00;
     }
     &.prev {
 
@@ -98,12 +67,6 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 2.7em;
 }
 
-#container {
-  width:100%;
-  position:relative;
-  overflow:visible;
-}
-
 #footer {
   clear:both;
   padding:20px 10px;
@@ -111,50 +74,13 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 10px;
 }
 
-#table-of-contents {
-  display: none;
-  position: fixed;
-  left:0;
-  top:41px;
-  bottom:0;
-  width:300px;
-  padding:0;
-  margin: 0;
-  overflow: auto;
-  border-right:1px solid #eee;
-  background-color: #FBF8F5;
-  font-size: 13px;
-  li {
-    list-style-position: inside;
-    color: #555;
-    border-bottom:1px solid #eee;
-    &:hover, &.active {
-      color:#FFF;
-      a {
-        background-color: $bold-blue;
-        color:#FFF;
-      }
-    }
-    a {
-      display: block;
-      padding:7px 15px;
-      text-decoration: none;
-      color:inherit;
-      font-size:inherit;
-    }
-    &:last-child {
-      border-bottom:0;
-    }
-  }
-}
-body.toc-expand {
-  #table-of-contents {
-    display:block;
-  }
+#commit-container {
+  height: 100%;
 }
 
 #main-commit-container {
   width: 100%;
+  height: 100%;
   overflow: auto;
   .section-inner {
     padding:20px;
@@ -162,11 +88,20 @@ body.toc-expand {
 }
 #lesson-pane {
   width: 30%;
+  height: 100%;
+  overflow: auto;
   float: left;
+  > .section-inner {
+    margin-top: 40px;
+  }
 }
 
 #code-pane {
   width: 70%;
+  height: 100%;
+  min-height: 100%;
+  overflow: auto;
+  background-color: #111;
   float: left;
 }
 
@@ -179,14 +114,6 @@ table {
     padding:0;
     margin:0;
   }
-  td {
-    &.addition {
-      background-color: #CFD;
-    }
-    &.deletion {
-      background-color: #FDD;
-    }
-  }  
 }
 
 
@@ -204,4 +131,17 @@ table {
 @media all and (min-width: 767px) {
   #left-pane {
     display: block !important; }
+}
+
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #424242;
 }
