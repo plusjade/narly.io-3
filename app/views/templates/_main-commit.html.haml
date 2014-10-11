@@ -6,9 +6,6 @@
   #code-pane
     .section-inner
       .diffs-wrap
-        {{# hasDiffs }}
-        %h3.section-heading File Changes
-        {{/ hasDiffs }}
         {{# diffs }}
         .diff-file{ class: "{{ status }}" }
           .diff-header
