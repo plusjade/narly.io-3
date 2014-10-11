@@ -16,7 +16,12 @@
 
 - content_for :page_javascripts do
   :plain
-    Narly.env.commits = new Narly.Steps(#{ @repo.steps.to_json.html_safe });
+    Narly.env.commits = new Narly.Steps();
+    var i = 0, total = #{ @repo.commit_count };
+    while(total--) {
+        Narly.env.commits.add({ index : i });
+        i++;
+    }
     Narly.env.commits.courseName = '#{ @repo.name }';
     new Narly.StepsView({ collection: Narly.env.commits });
     new Narly.TopBar({ el: '#top-bar' });

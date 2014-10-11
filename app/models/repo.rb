@@ -10,6 +10,12 @@ class Repo < SimpleDelegator
     super(Rugged::Repository.new(path))
   end
 
+  def commit_count
+    FileUtils.cd(workdir) do
+      return `git rev-list HEAD --count`.strip.to_i
+    end
+  end
+
   def readme
     return @readme if @readme
     content = ''
