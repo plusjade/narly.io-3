@@ -8,8 +8,11 @@
       .diffs-wrap
         {{# diffs }}
         .diff-file{ class: "{{ status }}" }
+          %span.show-content{ href: '#' } view file
+          %textarea.file-content
+            {{{ content }}}
           .diff-header
-            %span {{ path }}
+            %strong {{ path }}
           .diff-content
             {{{ html }}}
         {{/ diffs }}

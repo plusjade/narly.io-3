@@ -64,6 +64,13 @@ window.Narly = (function() {
         initialize : function() {
             var self = this;
 
+            $("#main-commit-container").on('click', '.show-content', function() {
+                $(this)
+                    .toggleClass('active')
+                    .next('textarea')
+                        .toggle();
+            });
+
             this.collection.each(function(model) {
               new Narly.StepView({ model : model });
             })

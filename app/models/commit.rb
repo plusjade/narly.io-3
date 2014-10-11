@@ -73,7 +73,9 @@ class Commit < SimpleDelegator
         status: status,
         path: path,
         html: html,
+        content: @repo.lookup(diff.delta.new_file[:oid]).content
       }
+
     end
 
     @diffs_to_api
