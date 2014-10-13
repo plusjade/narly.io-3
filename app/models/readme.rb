@@ -1,3 +1,6 @@
+# Parses a readme file based on a to-be-stablized format.
+# As of now it assumes markdown and treates h1 headers (# Blah on newline)
+# as break points. Content directly following a header is associated with that step.
 class Readme
 
   def initialize(content)
@@ -57,7 +60,9 @@ class Readme
               .lines
               .to_a
               .slice(headers[index][:index], (end_index-headers[index][:index]))
-              .join
+
+    output.shift
+    output = output.join
 
     split_index = nil
     output.each_line.each_with_index do |line, i|
