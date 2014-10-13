@@ -14,11 +14,12 @@ window.Narly = (function() {
         }
     })
 
+    // Steps collection
     var Steps = Backbone.Collection.extend({
         model: Step
         ,
         url : function() {
-            return '/courses/' + this.courseName + '/steps/';
+            return '/' + this.courseName + '/steps/';
         }
         ,
         getPrevFromActive : function() {

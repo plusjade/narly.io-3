@@ -4,11 +4,11 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @repo = Repo.new(params[:id])
+    @repo = Repo.new("#{ params[:username] }/#{ params[:id] }")
   end
 
   def steps
-    repo = Repo.new(params[:id])
+    repo = Repo.new("#{ params[:username] }/#{ params[:id] }")
     step = repo.step(params[:step_id])
 
     respond_to do |format|
