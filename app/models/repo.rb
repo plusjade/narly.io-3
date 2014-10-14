@@ -12,7 +12,18 @@ class Repo < SimpleDelegator
 
   def commit_count
     FileUtils.cd(workdir) do
-      return `git rev-list HEAD --count`.strip.to_i
+      #return `git rev-list HEAD --count`.strip.to_i
+      return `git shortlog | grep -E '^[ ]+\\w+' | wc -l`.strip.to_i
+    end
+  end
+
+  # @return [Array] all commit message in reverse order.
+  # This is helpful as a starting point for your readme when composing
+  # your content after the fact. That is, you should make commits as normal
+  # based on what you are doing, then expand on them more in-depth when you are finished.
+  def commits_summary
+    FileUtils.cd(workdir) do
+      return `git log --reverse --pretty=format:'%s'`.lines.to_a
     end
   end
 
